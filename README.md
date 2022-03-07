@@ -7,6 +7,12 @@ Liblinphone is a high-level SIP library integrating all calling and instant mess
 It is the cross-platform VoIP library on which the *Linphone[1]* application is based on, and that anyone can use to add audio and video calls
 or instant messaging capabilities to an application.
 
+### DIVUS GmbH license and trademarks
+
+The code is released under the terms of the GNU/GPLv3 license.
+
+"DIVUS", "VIDEOPHONE Mobile" and other branding names are trademarks of DIVUS GmbH and if you plan to build the app for redistribution must be replaced in icons, images and labels.
+
 # License
 
 Copyright © Belledonne Communications
