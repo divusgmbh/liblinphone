@@ -356,6 +356,7 @@ void Account::setState (LinphoneRegistrationState state, const std::string& mess
 		if (state == LinphoneRegistrationOk) {
 			const SalAddress *salAddr = mOp->getContactAddress();
 			if (salAddr) L_GET_CPP_PTR_FROM_C_OBJECT(mContactAddress)->setInternalAddress(salAddr);
+			mOldParams = nullptr; // We can drop oldParams, since last registration was successful.
 		}
 
 		if (linphone_core_should_subscribe_friends_only_when_registered(mCore) && mState != state && state == LinphoneRegistrationOk) {
@@ -686,16 +687,9 @@ void Account::notifyPublishStateChanged (LinphonePublishState state) {
 				linphone_event_unref(mPresencePublishEvent);
 				mPresencePublishEvent = NULL;
 				break;
-			case LinphonePublishOk:{
-					const char * etag = linphone_event_get_custom_header(mPresencePublishEvent, "SIP-ETag");
-					if(etag)
-						setSipEtag(etag);
-					else{
-						lWarning() << "SIP-Etag is missing in custom header. The server must provide it for PUBLISH.";
-						setSipEtag("");
-					}
-					break;
-				}
+			case LinphonePublishOk:
+				setSipEtag(linphone_event_get_custom_header(mPresencePublishEvent, "SIP-ETag"));
+				break;
 			default:
 				break;
 		}
